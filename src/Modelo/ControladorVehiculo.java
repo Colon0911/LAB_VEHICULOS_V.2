@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import tiendadevehiculos.frmConfiguracion;
@@ -128,6 +129,26 @@ public class ControladorVehiculo {
     
     public boolean validarFK(){
         return true;
+    }
+    
+    
+    
+    
+    public ArrayList listar(String descricion){
+        ArrayList<Vehiculo> array=new ArrayList<>();
+        try {
+            pst = cn.prepareStatement("select * from vehiculos where descripcion = like '"+descricion +"%'");
+            rs=pst.executeQuery();
+           
+           
+            while (rs.next()) {
+               array.add(vehiculo);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ControladorVehiculo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return array;
     }
     
 }
